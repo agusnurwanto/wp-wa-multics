@@ -20,6 +20,10 @@
  * @subpackage Wp_Wa_Multics/admin
  * @author     Agus Nurwanto <agusnurwantomuslim@gmail.com>
  */
+
+use Carbon_Fields\Container;
+use Carbon_Fields\Field;
+
 class Wp_Wa_Multics_Admin {
 
 	/**
@@ -98,6 +102,20 @@ class Wp_Wa_Multics_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-wa-multics-admin.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	public function crb_attach_wa_options(){
+		if( !is_admin() ){
+        	return;
+        }
+		$basic_options_container = Container::make( 'theme_options', __( 'WA multics' ) )
+			->set_page_menu_position( 4 )
+	        ->add_fields(
+	        	array(
+		        	Field::make( 'text', 'crb_wa_device_key', 'Multics Device Key' )
+	            	->set_help_text('Device key bisa didapat dengan mendaftar di <a href="https://multics.id/" target="_blank">multics.id</a>.')
+	            )
+	        );
 	}
 
 }
